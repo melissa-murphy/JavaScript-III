@@ -15,14 +15,18 @@
   * dimensions (These represent the character's size in the video game)
   * destroy() // prototype method that returns: `${this.name} was removed from the game.`
 */
-function GameObject(object) {
+function GameObject() {
   this.createdAt = Humanoid.createdAt;
   this.name = Humanoid.name;
   this.dimensions = Humanoid.dimensions;
   this.destroy = function destroy() {
     // prototype method that returns: `${this.name} was removed from the game.`
+    Humanoid.prototype.destroy = function() {
+      return `${this.name} was removed from the game.`
+    }
   }
 }
+console.log(GameObject());
 
 /*
   === CharacterStats ===
@@ -30,10 +34,13 @@ function GameObject(object) {
   * takeDamage() // prototype method -> returns the string '<object name> took damage.'
   * should inherit destroy() from GameObject's prototype
 */
-function CharacterStats(object) {
+function CharacterStats() {
   this.healthPoints = Humanoid.healthPoints;
   this.takeDamage = function takeDamage() {
     // prototype method -> returns the string '<object name> took damage.'
+    Humanoid.prototype.takeDamage = function() {
+      return '<object name> took damage.'
+    }
   }
   this.destroy = GameObject.destroy;
 }
@@ -47,7 +54,7 @@ function CharacterStats(object) {
   * should inherit destroy() from GameObject through CharacterStats
   * should inherit takeDamage() from CharacterStats
 */
-function Humanoid(object) {
+function Humanoid() {
   this.team = Humanoid.team;
   this.weapons = Humanoid.weapons;
   this.language = Humanoid.language;
@@ -57,7 +64,7 @@ function Humanoid(object) {
   this.destroy = GameObject.destroy;
   this.takeDamage = CharacterStats.takeDamage;
 }
-
+// console.log(Humanoid(team, weapons, language, greet));
 /*
  * Inheritance chain: GameObject -> CharacterStats -> Humanoid
  * Instances of Humanoid should have all of the same properties as CharacterStats and GameObject.
@@ -117,6 +124,7 @@ function Humanoid(object) {
     language: 'Elvish',
   });
 
+  // console.log(Humanoid.createdAt);
   console.log(mage.createdAt); // Today's date
   console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
   console.log(swordsman.healthPoints); // 15
